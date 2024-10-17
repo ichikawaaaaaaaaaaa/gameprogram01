@@ -1,4 +1,5 @@
 #include "Stage.h"
+#include "Player.h"
 
 const int WIDTH = 12;
 const int HEIGHT = 8;
@@ -10,7 +11,7 @@ int map[HEIGHT][WIDTH] = {
 { 1, 0, 2, 0, 0, 2, 0, 1,1,1,1,1},
 { 1, 0, 2, 0, 0, 2, 0, 1,1,1,1,1},
 { 1, 0, 0, 0, 0, 0, 0, 1,1,1,1,1},
-{ 1, 0, 2, 0, 0, 2, 0, 1,1,1,1,1},
+{ 1, 0, 2, 0, 9, 2, 0, 1,1,1,1,1},
 { 1, 0, 2, 2, 2, 2, 0, 1,1,1,1,1},
 { 1, 1, 1, 1, 1, 1, 1, 1,1,1,1,1},
 
@@ -19,6 +20,18 @@ int map[HEIGHT][WIDTH] = {
 Stage::Stage()
 {
 	hImage = LoadGraph("data/image/parts.png");
+	for (int j = 0; j < HEIGHT; j++)
+	{
+		for (int i = 0;  i < WIDTH; i++)
+		{
+			if (map[j][i] == 9)
+			{
+				Player* p = Instantiate<Player>();
+				p->position.x = 40 + 100;
+				p->position.y = 40 + 100;
+			}
+		}
+	}
 }
 
 Stage::~Stage()
@@ -44,4 +57,53 @@ void Stage::Draw()
 			}
 		}
 	}
+}
+
+int Stage::IswallRigth(VECTOR2 pos)
+{
+	int i = (pos.x - 100) / 40;
+	int j = (pos.y - 100) / 40;
+	if (map[j][i] == 1)
+	{
+		int push = ((int)pos.x - 100) % 40 + 1;
+		return push;
+	}
+	return 0;
+}
+
+int Stage::IswallDown(VECTOR2 pos)
+{
+
+	int i = (pos.x - 100) / 40;
+	int j = (pos.y - 100) / 40;
+	if (map[j][i] == 1)
+	{
+		int push = ((int)pos.y - 100) % 40 + 1;
+		return push;
+	}
+	return 0;
+}
+
+int Stage::IswallLeft(VECTOR2 pos)
+{
+	int i = (pos.x - 100) / 40;
+	int j = (pos.y - 100) / 40;
+	if (map[j][i] == 1)
+	{
+		int push = 40 - ((int)pos.x - 100) % 40;
+		return push;
+	}
+	return 0;
+}
+
+int Stage::IswallUp(VECTOR2 pos)
+{
+	int i = (pos.x - 100) / 40;
+	int j = (pos.y - 100) / 40;
+	if (map[j][i] == 1)
+	{
+		int push = 40 - ((int)pos.y - 100) % 40;
+		return push;
+	}
+	return 0;
 }
