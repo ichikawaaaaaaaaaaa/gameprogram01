@@ -18,7 +18,7 @@ Bird::Bird()
 	attacking = false;
 
 	dead = false;
-}
+
 
 Bird::~Bird()
 {

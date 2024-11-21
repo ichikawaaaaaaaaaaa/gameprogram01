@@ -3,7 +3,6 @@
 #include "DebugScreen.h"
 #include <DxLib.h>
 #include "Stage.h"
-#include "Player.h"
 
 PlayScene::PlayScene()
 {
